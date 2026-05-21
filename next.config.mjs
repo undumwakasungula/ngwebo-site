@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 const securityHeaders = [
   {
     key: 'Content-Security-Policy',
-    value: "default-src 'self'; script-src 'self'; connect-src 'self' https://api.sendgrid.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self';",
+    value: "default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.sendgrid.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self';",
   },
   {
     key: 'Referrer-Policy',
