@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 
 type FormStatus = 'idle' | 'pending' | 'sent' | 'error';
 
@@ -8,6 +8,7 @@ export default function ContactForm() {
   const [status, setStatus] = useState<FormStatus>('idle');
   const [message, setMessage] = useState('We keep messages confidential and aim to respond quickly.');
   const [csrfToken, setCsrfToken] = useState<string>('');
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     fetch('/api/csrf')
@@ -44,9 +45,7 @@ export default function ContactForm() {
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
@@ -58,7 +57,8 @@ export default function ContactForm() {
 
       setStatus('sent');
       setMessage('Thanks — your message has been submitted successfully.');
-      event.currentTarget.reset();
+      // Use ref instead of event.currentTarget (which is null after await)
+      formRef.current?.reset();
     } catch (error) {
       setStatus('error');
       setMessage(
@@ -70,8 +70,12 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 rounded-[1.75rem] border border-white/10 bg-slate-950/90 p-8 shadow-glow">
-      <div className="grid gap-6 sm:grid-cols-2">
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      className="space-y-5 rounded-2xl border border-white/10 bg-slate-950/90 p-6 shadow-glow sm:rounded-[1.75rem] sm:p-8"
+    >
+      <div className="grid gap-5 sm:grid-cols-2">
         <label className="space-y-2 text-sm font-medium text-slate-200">
           <span>Name</span>
           <input
@@ -79,7 +83,8 @@ export default function ContactForm() {
             type="text"
             placeholder="Your name"
             required
-            className="w-full rounded-3xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20"
+            disabled={status === 'pending' || status === 'sent'}
+            className="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20 disabled:opacity-50"
           />
         </label>
         <label className="space-y-2 text-sm font-medium text-slate-200">
@@ -89,10 +94,12 @@ export default function ContactForm() {
             type="email"
             placeholder="you@example.com"
             required
-            className="w-full rounded-3xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20"
+            disabled={status === 'pending' || status === 'sent'}
+            className="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20 disabled:opacity-50"
           />
         </label>
       </div>
+
       <label className="space-y-2 text-sm font-medium text-slate-200">
         <span>Message</span>
         <textarea
@@ -100,16 +107,33 @@ export default function ContactForm() {
           rows={5}
           placeholder="Tell us about your mission goals or collaboration interest."
           required
-          className="min-h-[140px] w-full rounded-3xl border border-white/10 bg-slate-900/80 px-4 py-4 text-sm text-slate-100 outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20"
+          disabled={status === 'pending' || status === 'sent'}
+          className="min-h-[140px] w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20 disabled:opacity-50"
         />
       </label>
+
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm leading-6 text-slate-400">{message}</p>
+        <p
+          className={`text-sm leading-6 ${
+            status === 'sent'
+              ? 'text-cyan-300'
+              : status === 'error'
+              ? 'text-red-400'
+              : 'text-slate-400'
+          }`}
+        >
+          {message}
+        </p>
         <button
           type="submit"
-          className="inline-flex items-center justify-center rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+          disabled={status === 'pending' || status === 'sent'}
+          className="inline-flex shrink-0 items-center justify-center rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {status === 'sent' ? 'Message sent' : status === 'pending' ? 'Sending…' : 'Send message'}
+          {status === 'sent'
+            ? '✓ Message sent'
+            : status === 'pending'
+            ? 'Sending...'
+            : 'Send message'}
         </button>
       </div>
     </form>
