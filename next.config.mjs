@@ -5,11 +5,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const securityHeaders = [
-  // Temporarily disabled CSP to debug rendering issues
-  // {
-  //   key: 'Content-Security-Policy',
-  //   value: "default-src 'self'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.sendgrid.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-ancestors 'none'; base-uri 'self';",
-  // },
   {
     key: 'Referrer-Policy',
     value: 'strict-origin-when-cross-origin',
