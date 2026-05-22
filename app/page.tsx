@@ -16,7 +16,7 @@ export default function HomePage() {
         </div>
         <div className="rounded-[2rem] border border-white/10 bg-slate-950/90 p-10 shadow-glow">
           <p className="text-xs uppercase tracking-[0.3em] text-cyan-300/90">Founder</p>
-          <h3 className="mt-4 text-3xl font-semibold text-white">Undule’s journey</h3>
+          <h3 className="mt-4 text-3xl font-semibold text-white">Undule's journey</h3>
           <p className="mt-6 text-base leading-8 text-slate-300">
             After working across embedded systems and mission operations, Undule founded Ngwebo to bridge the gap between rigorous aerospace engineering and modern software development. The goal is fewer surprises, clearer controls, and safer launches.
           </p>
