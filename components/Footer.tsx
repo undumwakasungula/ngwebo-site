@@ -17,8 +17,8 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-4 text-slate-400">
-          <Link href="mailto:contact@ngwebo.com" className="text-xs transition hover:text-white sm:text-sm">
-            contact@ngwebo.com
+          <Link href="mailto:contactngwebo@gmail.com" className="text-xs transition hover:text-white sm:text-sm">
+            contactngwebo@gmail.com
           </Link>
           <Link href="https://github.com/ngwebo" target="_blank" className="text-xs transition hover:text-white sm:text-sm">
             GitHub

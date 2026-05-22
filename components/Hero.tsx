@@ -33,7 +33,7 @@ export default function Hero() {
         <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <Link
             href="#vision"
-            className="inline-flex w-full items-center justify-center rounded-full bg-cyan-400 px-7 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 sm:w-auto"
+            className="inline-flex w-full items-center justify-center rounded-full border border-white/15 bg-slate-900/80 px-7 py-3 text-sm text-slate-100 backdrop-blur-sm transition hover:border-cyan-300 hover:text-white sm:w-auto"
           >
             Explore Our Vision
           </Link>

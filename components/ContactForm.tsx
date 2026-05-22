@@ -56,7 +56,7 @@ export default function ContactForm() {
       }
 
       setStatus('sent');
-      setMessage('Thanks — your message has been submitted successfully.');
+      setMessage('Message has been submitted successfully.');
       // Use ref instead of event.currentTarget (which is null after await)
       formRef.current?.reset();
     } catch (error) {
@@ -127,10 +127,10 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={status === 'pending' || status === 'sent'}
-          className="inline-flex shrink-0 items-center justify-center rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex shrink-0 items-center justify-center rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-80"
         >
           {status === 'sent'
-            ? '✓ Message sent'
+            ? 'Message sent'
             : status === 'pending'
             ? 'Sending...'
             : 'Send message'}
