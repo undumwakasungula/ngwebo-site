@@ -13,7 +13,7 @@ export default function ContactPage() {
           </h1>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base sm:leading-8">
             Share your mission needs, collaboration ideas, or technical questions.
-            We&apos;ll respond with thoughtful insight and clear next steps.
+            We will respond with thoughtful insight and clear next steps.
           </p>
         </div>
       </section>
@@ -28,17 +28,17 @@ export default function ContactPage() {
           <div className="rounded-xl border border-white/10 bg-slate-900/70 p-5 transition hover:border-cyan-300/20 sm:rounded-2xl sm:p-6">
             <p className="text-xs uppercase tracking-[0.28em] text-cyan-300/80">Email</p>
             <a
-              href="mailto:contact@ngwebo.com"
+              href="mailto:contactngwebo@gmail.com"
               className="mt-3 block text-base font-semibold text-white transition hover:text-cyan-300 sm:text-lg"
             >
-              contact@ngwebo.com
+              contactngwebo@gmail.com
             </a>
           </div>
           <div className="rounded-xl border border-white/10 bg-slate-900/70 p-5 transition hover:border-cyan-300/20 sm:rounded-2xl sm:p-6">
             <p className="text-xs uppercase tracking-[0.28em] text-cyan-300/80">Community</p>
             <div className="mt-3 flex flex-col gap-2">
               <a
-                href="https://github.com/ngwebo"
+                href="https://github.com/undumwakasungula"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-base font-semibold text-white transition hover:text-cyan-300 sm:text-lg"

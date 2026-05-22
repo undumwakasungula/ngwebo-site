@@ -3,20 +3,20 @@ import Image from 'next/image';
 const subsystems = [
   {
     name: 'Power',
-    description: 'Efficient energy distribution and resilient power management for on-orbit systems.',
-    image: '/pcb.jpg',
+    description: 'Lightweight solar arrays and advanced battery systems delivering reliable energy for satellites.',
+    image: '/power.jpg',
     alt: 'Printed circuit board with power electronics',
   },
   {
     name: 'Communication',
     description: 'Adaptive uplink and downlink layers designed for secure mission telemetry.',
-    image: '/dpocean.jpg',
-    alt: 'Satellite communication terminal over ocean',
+    image: '/5G.jpg',
+    alt: 'Satellite communication graphic with 5G infrastructure',
   },
   {
     name: 'Navigation',
     description: 'Precision trajectory and orbit guidance that stays aligned with mission intent.',
-    image: '/5G.jpg',
+    image: '/guidance.jpg',
     alt: 'Navigation system graphic with 5G infrastructure',
   },
 ];
