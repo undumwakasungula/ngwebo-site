@@ -32,7 +32,8 @@ export default function ThemeToggle() {
       aria-label="Toggle dark mode"
       type="button"
       onClick={toggleTheme}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-500/25 bg-slate-900/70 text-slate-100 transition hover:border-cyan-300 hover:text-cyan-200 focus:outline-none focus:ring-2 focus:ring-cyan-300/40"
+      className="inline-flex h-10 w-10 items-center justify-center transition"
+      style={{ border: '1px solid var(--border)', background: 'transparent', color: 'var(--text)' }}
     >
       {theme === 'dark' ? (
         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

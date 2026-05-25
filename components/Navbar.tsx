@@ -28,22 +28,17 @@ export default function Navbar() {
 
   return (
     <>
-      <header
-        className={`sticky top-0 z-40 w-full transition-all duration-300 ${
-          scrolled
-            ? 'border-b border-white/10 bg-slate-950/90 shadow-lg shadow-black/20 backdrop-blur-xl'
-            : 'bg-transparent'
-        }`}
-      >
+      <header className={`sticky top-0 z-40 w-full transition-all duration-300 ${scrolled ? 'header-scrolled' : 'header-transparent'}`}>
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.24em] text-slate-100 transition hover:text-white"
+            className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.24em] transition"
             onClick={closeMenu}
+            style={{ color: 'var(--text)' }}
           >
-            <span className="relative h-9 w-9 overflow-hidden rounded-xl border border-white/10 bg-slate-900 shadow-glow">
-              <Image src="/icon.png" alt="Ngwebo logo" fill className="object-cover" />
+            <span className="relative h-9 w-9 overflow-hidden logo-icon-container">
+              <Image src="/icon.png" alt="Ngwebo logo" fill sizes="36px" className="object-cover" />
             </span>
             Ngwebo
           </Link>
@@ -57,7 +52,7 @@ export default function Navbar() {
                 className="group relative text-sm text-slate-300 transition hover:text-white"
               >
                 <span className="relative z-10">{item.label}</span>
-                <span className="absolute inset-x-0 bottom-[-4px] h-px scale-x-0 bg-cyan-300 transition-transform duration-300 group-hover:scale-x-100" />
+                <span className="absolute inset-x-0 bottom-[-4px] h-px scale-x-0 bg-cyan-400 transition-transform duration-300 group-hover:scale-x-100" style={{backgroundColor: 'var(--accent)'}} />
               </Link>
             ))}
           </nav>
@@ -67,7 +62,7 @@ export default function Navbar() {
             <ThemeToggle />
             <Link
               href="/contact"
-              className="hidden rounded-full border border-slate-500/30 bg-slate-900/80 px-4 py-2 text-sm text-slate-100 transition hover:border-cyan-300 hover:text-cyan-200 sm:inline-flex"
+              className="hidden sm:inline-flex btn btn-accent"
             >
               Talk to us
             </Link>
@@ -75,7 +70,8 @@ export default function Navbar() {
             <button
               aria-label="Toggle menu"
               onClick={() => setMenuOpen((prev) => !prev)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-slate-900/80 text-slate-100 transition hover:border-cyan-300 hover:text-cyan-200 md:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center transition md:hidden nav-toggle"
+              style={{ color: 'var(--text)' }}
             >
               <span className="flex flex-col items-center justify-center gap-[5px]">
                 <span
@@ -122,7 +118,7 @@ export default function Navbar() {
                 key={item.href}
                 href={item.href}
                 onClick={closeMenu}
-                className="rounded-xl px-4 py-3 text-base text-slate-300 transition hover:bg-white/5 hover:text-white"
+                className="px-4 py-3 text-base text-slate-300 transition hover:bg-white/5 hover:text-white"
               >
                 {item.label}
               </Link>
@@ -132,7 +128,7 @@ export default function Navbar() {
             <Link
               href="/contact"
               onClick={closeMenu}
-              className="flex w-full items-center justify-center rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+              className="flex w-full items-center justify-center bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
             >
               Talk to us
             </Link>

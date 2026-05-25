@@ -1,4 +1,8 @@
+"use client";
+
 import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect } from 'react';
 
 const subsystems = [
   {
@@ -22,29 +26,49 @@ const subsystems = [
 ];
 
 export default function Subsystems() {
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('in-view');
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="space-y-16">
+    <section className="section-alt space-y-16">
       {subsystems.map((item, index) => (
-        <div
+        <article
           key={item.name}
-          className={`grid gap-6 rounded-[1.75rem] border border-white/10 bg-slate-950/80 p-6 shadow-glow lg:grid-cols-[0.95fr_1.05fr] ${
-            index % 2 === 1 ? 'lg:flex-row-reverse lg:grid-cols-[1.05fr_0.95fr]' : ''
-          }`}
+          id={item.name.toLowerCase()}
+          tabIndex={0}
+          className={`section-split reveal ${index % 2 === 1 ? 'section-split--reverse' : ''}`}
         >
-          <div className="relative min-h-[260px] overflow-hidden rounded-[1.5rem] border border-white/10 bg-slate-900/70">
-            <Image src={item.image} alt={item.alt} fill className="object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-transparent to-transparent" aria-hidden="true" />
+          <div className="section-image">
+            <Image src={item.image} alt={item.alt} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
           </div>
-          <div className="flex flex-col justify-center">
-            <p className="text-xs uppercase tracking-[0.32em] text-cyan-300/90">{item.name}</p>
-            <h3 className="mt-4 text-3xl font-semibold text-white">{item.name} subsystem</h3>
-            <p className="mt-5 max-w-xl text-base leading-8 text-slate-300">{item.description}</p>
+          <div className="section-copy">
+            <p className="section-eyebrow">{item.name}</p>
+            <h3 className="subsystem-title">{item.name} subsystem</h3>
+            <p className="subsystem-desc">{item.description}</p>
+            <div className="mt-4">
+              <Link href={`/projects#${item.name.toLowerCase()}`} className="learn-btn" aria-label={`Learn more about ${item.name}`}>
+                Learn more
+              </Link>
+            </div>
           </div>
-        </div>
+        </article>
       ))}
-      <div className="rounded-[1.75rem] border border-white/10 bg-slate-950/80 p-8 text-slate-300">
-        <p className="text-sm uppercase tracking-[0.3em] text-cyan-300/90">Prototype focus</p>
-        <p className="mt-4 max-w-3xl text-base leading-8">
+
+      <div className="section-copy">
+        <p className="section-eyebrow">Prototype focus</p>
+        <p className="mt-4 max-w-3xl text-base leading-8 section-text">
           Ngwebo advances each subsystem through targeted prototyping: high-density PCB designs, secure telemetry layers, and concurrent C++ guidance logic.
         </p>
       </div>

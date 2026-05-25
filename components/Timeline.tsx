@@ -7,20 +7,22 @@ const milestones = [
 
 export default function Timeline() {
   return (
-    <div className="rounded-[1.75rem] border border-white/10 bg-slate-950/80 p-6 shadow-glow sm:p-8">
-      <h2 className="text-lg font-semibold text-white">Roadmap</h2>
-      <p className="mt-2 text-sm leading-7 text-slate-300">A focused roadmap that balances prototype velocity with mission assurance.</p>
+    <section className="section-alt">
+      <div className="section-copy">
+        <h2 className="text-lg font-semibold section-title">Roadmap</h2>
+        <p className="mt-2 text-sm leading-7 section-text">A focused roadmap that balances prototype velocity with mission assurance.</p>
+      </div>
       <div className="mt-8 space-y-6">
         {milestones.map((item) => (
           <div key={item.period} className="grid gap-3 sm:grid-cols-[110px_1fr] sm:items-start">
-            <div className="text-xs uppercase tracking-[0.24em] text-cyan-300/90">{item.period}</div>
+            <div className="text-xs uppercase tracking-[0.24em]" style={{color: 'var(--accent)'}}>{item.period}</div>
             <div>
-              <p className="font-semibold text-white">{item.label}</p>
-              <p className="mt-2 text-sm leading-7 text-slate-300">{item.detail}</p>
+              <p className="font-semibold" style={{color: 'var(--text)'}}>{item.label}</p>
+              <p className="mt-2 text-sm leading-7" style={{color: 'var(--text-muted)'}}>{item.detail}</p>
             </div>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

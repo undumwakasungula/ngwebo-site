@@ -6,9 +6,11 @@ type FormStatus = 'idle' | 'pending' | 'sent' | 'error';
 
 export default function ContactForm() {
   const [status, setStatus] = useState<FormStatus>('idle');
-  const [message, setMessage] = useState('We keep messages confidential and aim to respond quickly.');
+  const defaultMessage = 'We keep messages confidential and aim to respond quickly.';
+  const [message, setMessage] = useState(defaultMessage);
   const [csrfToken, setCsrfToken] = useState<string>('');
   const formRef = useRef<HTMLFormElement>(null);
+  const messageTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     fetch('/api/csrf')
@@ -19,9 +21,27 @@ export default function ContactForm() {
         }
       })
       .catch(() => {
+        setStatus('error');
         setMessage('Unable to initialize secure form submission. Please refresh the page.');
       });
+
+    return () => {
+      if (messageTimerRef.current) {
+        window.clearTimeout(messageTimerRef.current);
+      }
+    };
   }, []);
+
+  const handleInputChange = () => {
+    if (status === 'sent' || status === 'error') {
+      if (messageTimerRef.current) {
+        window.clearTimeout(messageTimerRef.current);
+        messageTimerRef.current = null;
+      }
+      setStatus('idle');
+      setMessage(defaultMessage);
+    }
+  };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -57,8 +77,16 @@ export default function ContactForm() {
 
       setStatus('sent');
       setMessage('Message has been submitted successfully.');
-      // Use ref instead of event.currentTarget (which is null after await)
       formRef.current?.reset();
+
+      if (messageTimerRef.current) {
+        window.clearTimeout(messageTimerRef.current);
+      }
+      messageTimerRef.current = window.setTimeout(() => {
+        setStatus('idle');
+        setMessage(defaultMessage);
+        messageTimerRef.current = null;
+      }, 4500);
     } catch (error) {
       setStatus('error');
       setMessage(
@@ -73,18 +101,19 @@ export default function ContactForm() {
     <form
       ref={formRef}
       onSubmit={handleSubmit}
-      className="space-y-5 rounded-2xl border border-white/10 bg-slate-950/90 p-6 shadow-glow sm:rounded-[1.75rem] sm:p-8"
+      className="space-y-5 max-w-2xl"
     >
       <div className="grid gap-5 sm:grid-cols-2">
-        <label className="space-y-2 text-sm font-medium text-slate-200">
-          <span>Name</span>
+        <label className="space-y-2 text-sm font-medium" style={{color: 'var(--text)'}}>
+        <span>Name</span>
           <input
             name="name"
             type="text"
             placeholder="Your name"
             required
-            disabled={status === 'pending' || status === 'sent'}
-            className="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20 disabled:opacity-50"
+            disabled={status === 'pending'}
+            onChange={handleInputChange}
+            className="w-full border border-white/10 bg-transparent px-4 py-3 text-sm outline-none transition placeholder:text-slate-500 disabled:opacity-50"
           />
         </label>
         <label className="space-y-2 text-sm font-medium text-slate-200">
@@ -94,40 +123,40 @@ export default function ContactForm() {
             type="email"
             placeholder="you@example.com"
             required
-            disabled={status === 'pending' || status === 'sent'}
-            className="w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20 disabled:opacity-50"
+            disabled={status === 'pending'}
+            onChange={handleInputChange}
+            className="w-full border border-white/10 bg-transparent px-4 py-3 text-sm outline-none transition placeholder:text-slate-500 disabled:opacity-50"
           />
         </label>
       </div>
 
-      <label className="space-y-2 text-sm font-medium text-slate-200">
+        <label className="space-y-2 text-sm font-medium" style={{color: 'var(--text)'}}>
         <span>Message</span>
         <textarea
           name="message"
           rows={5}
           placeholder="Tell us about your mission goals or collaboration interest."
           required
-          disabled={status === 'pending' || status === 'sent'}
-          className="min-h-[140px] w-full rounded-xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20 disabled:opacity-50"
+          disabled={status === 'pending'}
+          onChange={handleInputChange}
+          className="min-h-[140px] w-full border border-white/10 bg-transparent px-4 py-3 text-sm outline-none transition placeholder:text-slate-500 disabled:opacity-50"
         />
       </label>
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p
-          className={`text-sm leading-6 ${
-            status === 'sent'
-              ? 'text-cyan-300'
-              : status === 'error'
-              ? 'text-red-400'
-              : 'text-slate-400'
-          }`}
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          className="text-sm leading-6"
+          style={{color: status === 'sent' ? 'var(--accent)' : status === 'error' ? '#ef4444' : 'var(--text-muted)'}}
         >
           {message}
         </p>
         <button
           type="submit"
-          disabled={status === 'pending' || status === 'sent'}
-          className="inline-flex shrink-0 items-center justify-center rounded-full bg-cyan-400 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-80"
+          disabled={status === 'pending'}
+          className={`btn btn-primary inline-flex shrink-0 items-center justify-center px-6 py-3 text-sm ${status === 'pending' ? 'opacity-80 cursor-not-allowed' : ''}`}
         >
           {status === 'sent'
             ? 'Message sent'

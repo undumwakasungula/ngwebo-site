@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: 'Ngwebo | Advanced Guidance & Satellite Systems',
   description: 'Ngwebo builds scalable software, hardware, and cloud solutions for satellite guidance systems.',
   metadataBase: new URL('https://ngwebo.com'),
+  icons: {
+    icon: '/icon.png',
+  },
   openGraph: {
     title: 'Ngwebo | Advanced Guidance & Satellite Systems',
     description: 'Scalable solutions for satellite guidance systems across software, hardware, and cloud.',
@@ -16,14 +19,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen text-slate-100 bg-space-950">
-        <div className="relative isolate overflow-hidden px-6 sm:px-8 lg:px-12">
-          <Navbar />
-          <main className="mx-auto flex w-full max-w-7xl flex-col gap-16 pb-16 pt-8">
-            {children}
-          </main>
-          <Footer />
-        </div>
+      <body className="min-h-screen" style={{backgroundColor: 'var(--background)', color: 'var(--text)'}}>
+        <Navbar />
+        <main className="w-full">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
