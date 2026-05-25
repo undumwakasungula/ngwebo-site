@@ -176,11 +176,27 @@ html.light .header-scrolled { background: rgba(255,255,255,0.95); border-bottom:
   padding: var(--section-padding) 6vw;
 }
 
+html.light .section-dark {
+  border-top: 1px solid #dce6f2;
+  border-bottom: 1px solid #dce6f2;
+}
+
+html.light .section-alt {
+  border-top: 1px solid #dce6f2;
+}
+
 html.light .section-dark,
+html.light .site-footer,
+html.light .section-cta,
+html.light .section-border-row {
+  background: var(--background);
+  color: var(--text);
+}
+
 html.light .section-alt,
 html.light .hero-section,
 html.light .section-immersive {
-  background: var(--background);
+  background: var(--background-alt);
   color: var(--text);
 }
 

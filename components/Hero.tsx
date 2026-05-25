@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section className="hero-section overflow-hidden">
       <Image
-        src="/guidance.jpg"
+        src="/sat_guidance.jpg"
         alt="Satellite guidance imagery"
         fill
         sizes="100vw"

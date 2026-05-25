@@ -101,7 +101,7 @@ export default function ContactForm() {
     <form
       ref={formRef}
       onSubmit={handleSubmit}
-      className="space-y-5 max-w-2xl"
+      className="space-y-5 max-w-2xl mx-auto px-4 sm:px-0"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="space-y-2 text-sm font-medium" style={{color: 'var(--text)'}}>

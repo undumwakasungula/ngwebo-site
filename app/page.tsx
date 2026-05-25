@@ -37,12 +37,12 @@ export default function HomePage() {
         <p className="section-text">
           We work with teams that need a straightforward, well-defined path from concept to in-orbit performance.
         </p>
-        <div className="hero-cta-group">
-          <Link href="/contact" className="btn btn-primary">
-            Reach out
+        <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <Link href="/contact" className="w-full sm:w-auto">
+            <span className="btn btn-primary">Reach out</span>
           </Link>
-          <Link href="/projects" className="btn btn-accent">
-            Review subsystems
+          <Link href="/projects" className="w-full sm:w-auto">
+            <span className="btn btn-accent">Review subsystems</span>
           </Link>
         </div>
       </section>
